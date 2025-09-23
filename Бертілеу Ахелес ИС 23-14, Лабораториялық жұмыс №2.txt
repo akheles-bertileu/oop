@@ -1,9 +1,0 @@
-count = 0
-while count < 5:
-    print(f"while циклы: count = {count}")
-    count += 1
-
-print()  
-
-for i in range(5):
-    print(f"for циклы: i = {i}")
