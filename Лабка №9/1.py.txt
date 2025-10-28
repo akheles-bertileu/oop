@@ -1,0 +1,134 @@
+№1-Жұмыс
+class Robot:
+    def __init__(self, model, power):
+        self.model = model
+        self.power = power
+
+    def charge(self, amount):
+        self.power = min(100, self.power + amount)
+        print(f"{self.model} қуатталды! Қазір қуаты: {self.power}%")
+
+    def work(self):
+        if self.power <= 10:
+            print(f"{self.model}: Қуат аз! Заряд керек ⚡️")
+        else:
+            self.power -= 10
+            print(f"{self.model} жұмыс істеді. Қалған қуат: {self.power}%")
+
+bot = Robot("Atlas", 50)
+bot.work()
+bot.charge(30)
+bot.work()
+
+Жауабы:
+Atlas жұмыс істеді. Қалған қуат: 40%
+Atlas қуатталды! Қазір қуаты: 70%
+Atlas жұмыс істеді. Қалған қуат: 60%
+
+№2-Жұмыс
+class Robot:
+    def __init__(self, model, power):
+        self.model = model
+        self.__power = power  
+
+    def get_power(self):
+        return self.__power
+
+    def charge(self, amount):
+        self.__power = min(100, self.__power + amount)
+        print(f"{self.model} қуатталды! Қазір қуаты: {self.__power}%")
+
+    def work(self):
+        if self.__power <= 10:
+            print(f"{self.model}: Қуат аз! Заряд керек ⚡️")
+        else:
+            self.__power -= 10
+            print(f"{self.model} жұмыс істеді. Қалған қуат: {self.__power}%")
+
+bot = Robot("Atlas", 50)
+print("Бастапқы қуат:", bot.get_power())
+bot.work()
+bot.charge(30)
+print("Қазіргі қуат:", bot.get_power())
+
+Жауабы:
+Бастапқы қуат: 50
+Atlas жұмыс істеді. Қалған қуат: 40%
+Atlas қуатталды! Қазір қуаты: 70%
+Қазіргі қуат: 70
+
+№3-Жұмыс
+class Robot:
+    def __init__(self, model, power):
+        self.model = model
+        self.__power = power  
+    def get_power(self):
+        return self.__power
+
+    def set_power(self, value):
+        if 0 <= value <= 100:
+            self.__power = value
+        else:
+            print("Қате: қуат деңгейі 0 мен 100 арасында болуы керек!")
+
+bot = Robot("Atlas", 70)
+bot.set_power(90)
+print(bot.get_power())
+
+Жауабы:
+90
+
+№4-Жұмыс
+class Robot:
+    def __init__(self, model, power):
+        self._model = model
+        self._power = power  
+
+    @property
+    def power(self):
+        return self._power
+
+    @power.setter
+    def power(self, value):
+        if not (0 <= value <= 100):
+            raise ValueError("Қуат деңгейі 0 мен 100 арасында болуы керек!")
+        self._power = value
+
+bot = Robot("Atlas", 50)
+print(bot.power) 
+bot.power = 80   
+print(bot.power)  
+
+Жауабы:
+50
+80
+
+№5-Жұмыс
+class Robot:
+    def __init__(self, model, power):
+        self._model = model
+        self._power = power  
+
+    @property
+    def power(self):
+        return self._power
+
+    @power.setter
+    def power(self, value):
+        if not (0 <= value <= 100):
+            raise ValueError("Қуат деңгейі 0 мен 100 арасында болуы керек!")
+        self._power = value
+
+class AdvancedRobot(Robot):
+    def boost_power(self, percent):
+        """Қуатты пайызбен арттыру"""
+        self.power += self.power * percent
+        if self.power > 100:
+            self.power = 100
+
+bot = AdvancedRobot("Atlas", 50)
+bot.boost_power(0.2)  
+print(bot.power)
+
+Жауабы:
+60.0
