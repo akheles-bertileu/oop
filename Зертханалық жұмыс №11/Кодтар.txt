@@ -1,0 +1,180 @@
+Task №1:
+class Vehicle:
+    def __init__(self, brand, year):
+        self.brand = brand
+        self.year = year
+
+    def display_info(self):
+        print(f"Brand: {self.brand}, Year: {self.year}")
+
+class Truck(Vehicle):
+    def __init__(self, brand, year, capacity):
+        super().__init__(brand, year)
+        self.capacity = capacity
+
+    def display_info(self):
+        print(f"Brand: {self.brand}, Year: {self.year}, Capacity: {self.capacity} tons")
+
+class Bus(Vehicle):
+    def __init__(self, brand, year, passenger_capacity):
+        super().__init__(brand, year)
+        self.passenger_capacity = passenger_capacity
+
+    def display_info(self):
+        print(f"Brand: {self.brand}, Year: {self.year}, Passenger Capacity: {self.passenger_capacity} passengers")
+
+truck = Truck("MAN", 2020, 15)
+bus = Bus("Mercedes", 2018, 50)
+
+truck.display_info()
+bus.display_info()
+
+Жауабы:
+Brand: MAN, Year: 2020, Capacity: 15 tons
+Brand: Mercedes, Year: 2018, Passenger Capacity: 50 passengers
+
+Task №2:
+class Animal:
+    def speak(self):
+        print("This animal makes a sound.")
+
+class Dog(Animal):
+    def speak(self):
+        print("The dog barks: Woof! Woof!")
+
+class Cat(Animal):
+    def speak(self):
+        print("The cat meows: Meow! Meow!")
+
+a = Animal()
+d = Dog()
+c = Cat()
+
+a.speak()  # This animal makes a sound.
+d.speak()  # The dog barks: Woof! Woof!
+c.speak()  # The cat meows: Meow! Meow!
+
+Жауабы:
+This animal makes a sound.
+The dog barks: Woof! Woof!
+The cat meows: Meow! Meow!
+
+Task №3:
+class Vehicle:
+    def fuel_efficiency(self):
+        pass  
+
+class Car(Vehicle):
+    def __init__(self, distance, fuel_used):
+        self.distance = distance      
+        self.fuel_used = fuel_used    
+
+    def fuel_efficiency(self):
+        return self.distance / self.fuel_used  # км/литр
+
+class ElectricScooter(Vehicle):
+    def __init__(self, distance, battery_used):
+        self.distance = distance       
+        self.battery_used = battery_used  
+
+    def fuel_efficiency(self):
+        return self.distance / self.battery_used  # км/% заряд
+
+vehicles = [
+    Car(450, 30),
+    ElectricScooter(60, 15)
+]
+
+for v in vehicles:
+    print(f"Efficiency: {v.fuel_efficiency():.2f}")
+
+Жауабы:
+Efficiency: 15.00
+Efficiency: 4.00
+
+Task №4:
+class Warrior:
+    def ability(self):
+        print("Fighting with a sword ")
+
+class Wizard:
+    def ability(self):
+        print("Casting magical spells ")
+
+class Battlemage(Warrior, Wizard):
+    def ability(self):
+        super().ability()  
+        print("Also channeling arcane energy ")
+
+hero = Battlemage()
+hero.ability()
+
+Жауабы:
+Fighting with a sword 
+Also channeling arcane energy 
+
+Control Questions:
+1. Inheritance (Мұрагерлік) дегеніміз не?
+
+Inheritance — объектіге бағытталған бағдарламалауда (OOP) бір класс басқа кластың қасиеттері мен әдістерін мұра ретінде алу механизмі.
+Бұл — кодты қайта қолдануға, құрылымды жеңілдетуге және иерархия құруға мүмкіндік береді.
+
+Мысалы:
+
+Animal — базалық (ата-аналық) класс.
+
+Dog — Animal класынан мұрагерлік алған туынды класс.
+Ол Animal класындағы қасиеттер мен әдістерді пайдалана алады.
+
+2. super() функциясы қалай жұмыс істейді?
+
+super() — ата-аналық (parent) кластың әдістерін шақыру үшін қолданылады.
+Яғни, егер туынды класта бір әдіс қайта анықталса, super() арқылы сол әдістің ата-аналық нұсқасын да орындауға болады.
+
+Бұл әсіресе көптік мұрагерлікте (multiple inheritance) пайдалы, себебі Python super() арқылы MRO (Method Resolution Order) тәртібімен әдістерді бірізділікпен шақырады.
+
+3. Method Overriding пен Overloading айырмашылығы
+
+Overriding (қайта анықтау) — туынды класта ата-аналық кластағы әдістің атын сол күйі қолданып, бірақ ішкі логикасын өзгерту.
+→ Яғни, ата-ананың әдісін басып жазу.
+
+Overloading (артық жүктеу) — бір класта бір атаумен, бірақ әр түрлі параметрлермен бірнеше әдіс жасау.
+→ Python-та нақты overloading жоқ, бірақ *args және **kwargs арқылы соған ұқсас мінез-құлық жасауға болады.
+
+4. Polymorphism дегеніміз не?
+
+Polymorphism — “бір интерфейс, әр түрлі мінез-құлық” қағидасы.
+Бірдей әдіс атауы әр түрлі кластарда әр түрлі әрекет орындай алады.
+
+Мысалы, әр түрлі объектілерде бірдей speak() әдісі бар, бірақ біреуі иттің, біреуі мысықтың дауысын шығарады.
+
+Яғни, бірдей әдісті әртүрлі объектілер әрқалай орындай алады.
+
+5. Method Resolution Order (MRO) мақсаты
+
+MRO — Python-да әдістерді іздеу тәртібін анықтайтын ереже.
+Көптік мұрагерлік кезінде Python қай кластың әдісін бірінші орындау керектігін MRO тізбегі арқылы шешеді.
+
+Бұл тәртіп:
+
+Алдымен ағымдағы класс;
+
+Содан соң ата-аналық кластар (солдан оңға қарай);
+
+Соңында object класы арқылы аяқталады.
+
+Қысқаша айтқанда:
+
+Inheritance → қасиеттер мен әдістерді мұрагерлік алу.
+
+super() → ата-аналық әдісті шақыру.
+
+Overriding vs Overloading → әдісті қайта жазу vs параметрге қарай әртүрлі нұсқасын жасау.
+
+Polymorphism → бірдей әдіс, әр түрлі мінез-құлық.
+
+MRO → көптік мұрагерлікте әдіс іздеу тәртібі.
+
+
+
+
