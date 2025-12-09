@@ -1,0 +1,181 @@
+from abc import ABC, abstractmethod
+
+# -----------------------
+# Abstract Animal Class
+# -----------------------
+class Animal(ABC):
+    def __init__(self, name, age, species):
+        self._name = name          # encapsulation
+        self._age = age
+        self._species = species
+
+    # Getters and setters
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def age(self):
+        return self._age
+
+    @property
+    def species(self):
+        return self._species
+
+    @abstractmethod
+    def make_sound(self):
+        pass
+
+    def eat(self):
+        print(f"{self.name} the {self.species} is eating.")
+
+# -----------------------
+# Concrete Animals
+# -----------------------
+class Lion(Animal):
+    def __init__(self, name, age):
+        super().__init__(name, age, "Lion")
+
+    def make_sound(self):
+        print(f"{self.name} roars: Roar!")
+
+class Elephant(Animal):
+    def __init__(self, name, age):
+        super().__init__(name, age, "Elephant")
+
+    def make_sound(self):
+        print(f"{self.name} trumpets: Pawoo!")
+
+class Monkey(Animal):
+    def __init__(self, name, age):
+        super().__init__(name, age, "Monkey")
+
+    def make_sound(self):
+        print(f"{self.name} chatters: Ooh ooh aah aah!")
+
+# -----------------------
+# Cage Class
+# -----------------------
+class Cage:
+    def __init__(self, cage_id, capacity):
+        self._id = cage_id
+        self._capacity = capacity
+        self._animals = []
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def animals(self):
+        return self._animals
+
+    def add_animal(self, animal):
+        if len(self._animals) < self._capacity:
+            self._animals.append(animal)
+            print(f"{animal.name} added to Cage {self._id}.")
+        else:
+            print(f"Cage {self._id} is full!")
+
+    def remove_animal(self, animal):
+        if animal in self._animals:
+            self._animals.remove(animal)
+            print(f"{animal.name} removed from Cage {self._id}.")
+
+    def list_animals(self):
+        print(f"Cage {self._id} contains:")
+        for animal in self._animals:
+            print(f"- {animal.name} ({animal.species})")
+
+# -----------------------
+# Staff Class
+# -----------------------
+class Staff:
+    def __init__(self, name, role):
+        self._name = name
+        self._role = role
+
+    def feed_animal(self, animal):
+        print(f"{self._name} is feeding {animal.name}.")
+        animal.eat()
+
+# -----------------------
+# Zoo Class
+# -----------------------
+class Zoo:
+    def __init__(self):
+        self._cages = []
+        self._staff = []
+
+    def add_cage(self, cage):
+        self._cages.append(cage)
+        print(f"Cage {cage.id} added to the zoo.")
+
+    def add_staff(self, staff):
+        self._staff.append(staff)
+        print(f"Staff {staff._name} ({staff._role}) added to the zoo.")
+
+    def assign_animal_to_cage(self, animal, cage_id):
+        for cage in self._cages:
+            if cage.id == cage_id:
+                cage.add_animal(animal)
+                return
+        print(f"Cage {cage_id} not found!")
+
+    def feed_all_animals(self):
+        for staff_member in self._staff:
+            for cage in self._cages:
+                for animal in cage.animals:
+                    staff_member.feed_animal(animal)
+
+# -----------------------
+# Factory Pattern for Animals
+# -----------------------
+class AnimalFactory:
+    @staticmethod
+    def create_animal(type, name, age):
+        if type.lower() == "lion":
+            return Lion(name, age)
+        elif type.lower() == "elephant":
+            return Elephant(name, age)
+        elif type.lower() == "monkey":
+            return Monkey(name, age)
+        else:
+            raise ValueError(f"Unknown animal type: {type}")
+
+# -----------------------
+# Demo / Test
+# -----------------------
+
+# Create zoo
+zoo = Zoo()
+
+# Add cages
+zoo.add_cage(Cage(1, 2))
+zoo.add_cage(Cage(2, 3))
+
+# Add staff
+zoo.add_staff(Staff("Alice", "Feeder"))
+zoo.add_staff(Staff("Bob", "Caretaker"))
+
+# Create animals using Factory
+lion = AnimalFactory.create_animal("lion", "Simba", 5)
+elephant = AnimalFactory.create_animal("elephant", "Dumbo", 10)
+monkey = AnimalFactory.create_animal("monkey", "George", 2)
+
+# Assign animals to cages
+zoo.assign_animal_to_cage(lion, 1)
+zoo.assign_animal_to_cage(elephant, 1)
+zoo.assign_animal_to_cage(monkey, 2)
+
+# List animals in cages
+for cage in zoo._cages:
+    cage.list_animals()
+
+# Staff feed all animals
+zoo.feed_all_animals()
+
+# Polymorphism demonstration
+lion.make_sound()
+elephant.make_sound()
+monkey.make_sound()
